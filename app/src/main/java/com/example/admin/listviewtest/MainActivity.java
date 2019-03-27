@@ -2,15 +2,18 @@ package com.example.admin.listviewtest;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private String[] data = {"Apple", "Banana", "Pear", "Grape", "Pineapple", "Cheery", "Watermelon", "Mango", "Strawberry", "Mango", "Grape", "Pear", "Apple", "Banana", "Pear", "Grape"};
+    //    private String[] data = {"Apple", "Banana", "Pear", "Grape", "Pineapple", "Cheery", "Watermelon", "Mango", "Strawberry", "Mango", "Grape", "Pear", "Apple", "Banana", "Pear", "Grape"};
     private List<Fruit> fruitList = new ArrayList<>();
 
     @Override
@@ -22,8 +25,16 @@ public class MainActivity extends AppCompatActivity {
 
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,data);
         FruitAdapter adapter = new FruitAdapter(MainActivity.this, R.layout.fruit_item, fruitList);
-        ListView listView = (ListView) findViewById(R.id.list_view);
+        final ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+        //listview的点击事件
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Fruit fruit = fruitList.get(position);//通过 position 参数 判断 出 用户 点击 的 是 哪一个 子项，
+                Toast.makeText(MainActivity.this, fruit.getName(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
